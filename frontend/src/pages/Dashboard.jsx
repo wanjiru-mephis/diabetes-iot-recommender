@@ -28,7 +28,6 @@ export default function Dashboard() {
     day: d.day,
     mean: d.mean_glucose,
     rolling_7d: d.rolling_7d_mean,
-    tir: d.time_in_range_pct,
   }))
 
   return (
@@ -46,24 +45,52 @@ export default function Dashboard() {
 
       {summary && (
         <div className="cards">
-          <SummaryCard label="Total Readings" value={summary.total_readings} hint={`${summary.days_covered} days covered`} />
-          <SummaryCard label="Latest Mean" value={summary.latest_mean_glucose ? `${summary.latest_mean_glucose.toFixed(0)} mg/dL` : '—'} hint={summary.latest_day ?? ''} />
-          <SummaryCard label="7-Day Average" value={summary.rolling_7d_mean ? `${summary.rolling_7d_mean.toFixed(0)} mg/dL` : '—'} />
-          <SummaryCard label="Latest Time in Range" value={summary.latest_tir_pct != null ? `${summary.latest_tir_pct.toFixed(0)}%` : '—'} hint="Target: ≥ 70%" />
-          <SummaryCard label="Estimated A1c" value={summary.estimated_a1c ? `${summary.estimated_a1c.toFixed(1)}%` : '—'} hint="ADAG formula" />
-          <SummaryCard label="Open Recommendations" value={summary.open_recommendations} />
+          <SummaryCard
+            label="Total Readings"
+            value={summary.total_readings}
+            hint={`${summary.days_covered} days covered`}
+            accent="blue"
+          />
+          <SummaryCard
+            label="Latest Mean"
+            value={summary.latest_mean_glucose ? `${summary.latest_mean_glucose.toFixed(0)} mg/dL` : '—'}
+            hint={summary.latest_day ?? ''}
+            accent="cyan"
+          />
+          <SummaryCard
+            label="7-Day Average"
+            value={summary.rolling_7d_mean ? `${summary.rolling_7d_mean.toFixed(0)} mg/dL` : '—'}
+            accent="purple"
+          />
+          <SummaryCard
+            label="Time in Range"
+            value={summary.latest_tir_pct != null ? `${summary.latest_tir_pct.toFixed(0)}%` : '—'}
+            hint="Target: ≥ 70%"
+            accent="green"
+          />
+          <SummaryCard
+            label="Estimated A1c"
+            value={summary.estimated_a1c ? `${summary.estimated_a1c.toFixed(1)}%` : '—'}
+            hint="ADAG formula"
+            accent="amber"
+          />
+          <SummaryCard
+            label="Open Recommendations"
+            value={summary.open_recommendations}
+            accent="red"
+          />
         </div>
       )}
 
       {chartData.length > 0 && (
         <div className="panel">
-          <h3>Daily Mean Glucose (last 30 days)</h3>
+          <h3>Daily Mean Glucose — last 30 days</h3>
           <GlucoseChart
             data={chartData}
             xKey="day"
             lines={[
               { key: 'mean', name: 'Daily mean', color: '#2563eb' },
-              { key: 'rolling_7d', name: '7-day rolling', color: '#d97706' },
+              { key: 'rolling_7d', name: '7-day rolling avg', color: '#d97706' },
             ]}
           />
         </div>

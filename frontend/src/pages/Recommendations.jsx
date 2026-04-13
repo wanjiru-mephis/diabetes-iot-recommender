@@ -33,8 +33,8 @@ export default function Recommendations() {
       </div>
 
       <div className="panel">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-          <h3 style={{ margin: 0 }}>Active Recommendations</h3>
+        <div className="panel-header">
+          <h3>Active Recommendations</h3>
           <button onClick={regenerate} disabled={busy}>
             {busy ? 'Regenerating…' : 'Regenerate'}
           </button>
